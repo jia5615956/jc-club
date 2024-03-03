@@ -14,7 +14,7 @@
         <module>jc-club-application</module>
         <module>jc-club-domain</module>
         <module>jc-club-common</module>
-        <module>jc-club-start</module>
+        <module>jc-club-starter</module>
         <module>jc-club-infra</module>
     </modules>
 
