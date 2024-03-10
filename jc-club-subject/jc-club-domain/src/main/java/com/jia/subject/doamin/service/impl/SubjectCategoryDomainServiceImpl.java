@@ -1,5 +1,6 @@
 package com.jia.subject.doamin.service.impl;
 
+import com.jia.subject.common.enums.IsDeletedFlagEnum;
 import com.jia.subject.doamin.convert.SubjectCategoryConvert;
 import com.jia.subject.doamin.entity.SubjectCategoryBO;
 import com.jia.subject.doamin.service.SubjectCategoryDomainService;
@@ -22,6 +23,8 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
     public void add(SubjectCategoryBO subjectCategoryBO) {
         //将BO转换为SubjectCategory
         SubjectCategory subjectCategory = SubjectCategoryConvert.INSTANCE.convertBoToCategory(subjectCategoryBO);
+        //将是否删除的值赋值
+        subjectCategory.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
         subjectCategoryService.insert(subjectCategory);
     }
 

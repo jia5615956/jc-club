@@ -6,12 +6,12 @@ import com.google.common.base.Preconditions;
 import com.jia.subject.application.convert.SubjectCategoryDTOConverter;
 import com.jia.subject.application.dto.SubjectCategoryDTO;
 import com.jia.subject.common.entity.Result;
-import com.jia.subject.doamin.convert.SubjectCategoryConvert;
 import com.jia.subject.doamin.entity.SubjectCategoryBO;
 import com.jia.subject.doamin.service.SubjectCategoryDomainService;
 import com.jia.subject.infra.basic.entity.SubjectCategory;
-import com.mysql.cj.util.StringUtils;
+
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -31,7 +31,7 @@ public class SubjectCategoryController {
     public Result<Boolean> add(@RequestBody SubjectCategoryDTO subjectCategoryDTO){
         try {
             Preconditions.checkNotNull(subjectCategoryDTO.getCategoryType(),"分类类型不能为空");
-            Preconditions.checkArgument(StringUtils.isNullOrEmpty(subjectCategoryDTO.getCategoryName()),"分类名字不能为空");
+            Preconditions.checkArgument(!StringUtils.isBlank(subjectCategoryDTO.getCategoryName()),"分类名字不能为空");
             Preconditions.checkNotNull(subjectCategoryDTO.getParentId(),"父id不能为空");
             //现将DTO转换为BO
             SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.convertDTOToCategoryBO(subjectCategoryDTO);
