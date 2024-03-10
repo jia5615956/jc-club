@@ -1,5 +1,6 @@
 package com.jia.subject.infra.basic.mapper;
 
+
 import com.jia.subject.infra.basic.entity.SubjectCategory;
 import org.apache.ibatis.annotations.Param;
 
@@ -72,5 +73,6 @@ public interface SubjectCategoryDao {
      */
     int deleteById(Long id);
 
+    List<SubjectCategory> queryPrimaryCategory();
 }
 

@@ -1,11 +1,19 @@
 package com.jia.subject.doamin.service;
 
 import com.jia.subject.doamin.entity.SubjectCategoryBO;
-import org.springframework.stereotype.Service;
+import com.jia.subject.infra.basic.entity.SubjectCategory;
+
+
+import java.util.List;
 
 
 public interface SubjectCategoryDomainService {
 
 
+    //新增分类
     public void add (SubjectCategoryBO subjectCategoryBO);
+
+    //查询分类
+    List<SubjectCategoryBO> queryPrimaryCategory();
+
 }
