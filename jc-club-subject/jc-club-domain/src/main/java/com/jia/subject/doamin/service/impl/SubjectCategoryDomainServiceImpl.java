@@ -27,9 +27,10 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
 
     //查询分类
     @Override
-    public List<SubjectCategoryBO> queryPrimaryCategory() {
-        //转换
-        List<SubjectCategory> categoryList = subjectCategoryService.queryPrimaryCategory();
+    public List<SubjectCategoryBO> queryCategory(SubjectCategoryBO subjectCategoryBO) {
+        //将BO转换
+        SubjectCategory subjectCategory = SubjectCategoryConvert.INSTANCE.convertBoToCategory(subjectCategoryBO);
+        List<SubjectCategory> categoryList = subjectCategoryService.queryCategory(subjectCategory);
         List<SubjectCategoryBO> boList = SubjectCategoryConvert.INSTANCE.convertListToCategoryBOList(categoryList);
         return boList;
     }

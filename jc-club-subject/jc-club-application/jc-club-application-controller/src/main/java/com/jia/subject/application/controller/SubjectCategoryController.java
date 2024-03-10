@@ -1,14 +1,15 @@
 package com.jia.subject.application.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
 import com.jia.subject.application.convert.SubjectCategoryDTOConverter;
 import com.jia.subject.application.dto.SubjectCategoryDTO;
 import com.jia.subject.common.entity.Result;
-
+import com.jia.subject.doamin.convert.SubjectCategoryConvert;
 import com.jia.subject.doamin.entity.SubjectCategoryBO;
 import com.jia.subject.doamin.service.SubjectCategoryDomainService;
-
+import com.jia.subject.infra.basic.entity.SubjectCategory;
 import com.mysql.cj.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -42,15 +43,37 @@ public class SubjectCategoryController {
         }
     }
 
-    //查询
+    //查询分类
     @GetMapping("/queryPrimaryCategory")
     public Result<List<SubjectCategoryDTO>> queryPrimaryCategory(){
         try{
+            //为了同一个服务调用
+            SubjectCategoryBO subjectCategoryBO = new SubjectCategoryBO();
             //查询
-            List<SubjectCategoryBO> boList = subjectCategoryDomainService.queryPrimaryCategory();
+            List<SubjectCategoryBO> boList = subjectCategoryDomainService.queryCategory(subjectCategoryBO);
             //转换
             List<SubjectCategoryDTO> subjectCategoryDTOList = SubjectCategoryDTOConverter.INSTANCE.convertBOListToDTOList(boList);
             return Result.ok(subjectCategoryDTOList);
+        }catch (Exception e){
+            log.info("SubjectCategoryController.add.error:{}",e.getMessage(),e);
+            return Result.fail(e.getMessage());
+        }
+    }
+
+    //根据主键查询
+    @PostMapping("/queryCategoryByPrimary")
+    public Result<SubjectCategory> queryCategoryByPrimary(@RequestBody SubjectCategoryDTO subjectCategoryDTO){
+        try{
+            if(log.isInfoEnabled()){
+                log.info("SubjectCategoryController.queryCategoryByPrimary.dto:{}", JSON.toJSONString(subjectCategoryDTO));
+            }
+            //判断
+            Preconditions.checkNotNull(subjectCategoryDTO.getParentId(),"分类父Id不能为空");
+            //将DTO转为BO
+            SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.convertDTOToCategoryBO(subjectCategoryDTO);
+            //调用服务
+            List<SubjectCategoryBO> boList = subjectCategoryDomainService.queryCategory(subjectCategoryBO);
+            return Result.ok(boList);
         }catch (Exception e){
             log.info("SubjectCategoryController.add.error:{}",e.getMessage(),e);
             return Result.fail(e.getMessage());

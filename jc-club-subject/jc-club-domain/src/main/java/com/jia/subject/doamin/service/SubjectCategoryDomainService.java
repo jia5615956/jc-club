@@ -14,6 +14,6 @@ public interface SubjectCategoryDomainService {
     public void add (SubjectCategoryBO subjectCategoryBO);
 
     //查询分类
-    List<SubjectCategoryBO> queryPrimaryCategory();
+    List<SubjectCategoryBO> queryCategory(SubjectCategoryBO subjectCategoryBO);
 
 }

@@ -49,5 +49,5 @@ public interface SubjectCategoryService {
     boolean deleteById(Long id);
 
     //查询分类
-    List<SubjectCategory> queryPrimaryCategory();
+    List<SubjectCategory> queryCategory(SubjectCategory subjectCategory);
 }
