@@ -18,4 +18,6 @@ public interface SubjectCategoryDomainService {
 
     //删除
     Boolean deleteCategoryByPrimary(SubjectCategoryBO subjectCategoryBO);
+
+    Boolean updateCategory(SubjectCategoryBO subjectCategoryBO);
 }

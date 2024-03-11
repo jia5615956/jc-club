@@ -44,7 +44,18 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
     public Boolean deleteCategoryByPrimary(SubjectCategoryBO subjectCategoryBO) {
         //转换
         SubjectCategory subjectCategory = SubjectCategoryConvert.INSTANCE.convertBoToCategory(subjectCategoryBO);
-        boolean b = subjectCategoryService.deleteById(subjectCategory.getId());
-        return b;
+        //调用更新服务
+        subjectCategory.setIsDeleted(IsDeletedFlagEnum.DELETED.code);
+        int count = subjectCategoryService.update(subjectCategory);
+        return count > 0;
+    }
+
+    @Override
+    public Boolean updateCategory(SubjectCategoryBO subjectCategoryBO) {
+        //转换
+        SubjectCategory subjectCategory = SubjectCategoryConvert.INSTANCE.convertBoToCategory(subjectCategoryBO);
+        //调用服务
+        int count = subjectCategoryService.update(subjectCategory);
+        return count > 0;
     }
 }

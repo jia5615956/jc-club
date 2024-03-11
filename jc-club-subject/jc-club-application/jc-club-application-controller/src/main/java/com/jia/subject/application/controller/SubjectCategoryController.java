@@ -111,8 +111,12 @@ public class SubjectCategoryController {
             Preconditions.checkNotNull(subjectCategoryDTO.getCategoryType(),"分类类型不能为空");
             Preconditions.checkArgument(!StringUtils.isBlank(subjectCategoryDTO.getCategoryName()),"分类名字不能为空");
             Preconditions.checkNotNull(subjectCategoryDTO.getParentId(),"父id不能为空");
+            Preconditions.checkNotNull(subjectCategoryDTO.getId(),"id不能为空");
             //转换
-            return null;
+            SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.convertDTOToCategoryBO(subjectCategoryDTO);
+            //调用服务
+            Boolean flag = subjectCategoryDomainService.updateCategory(subjectCategoryBO);
+            return Result.ok(flag);
         }catch (Exception e){
             log.info("SubjectCategoryController.add.error:{}",e.getMessage(),e);
             return Result.fail(e.getMessage());
