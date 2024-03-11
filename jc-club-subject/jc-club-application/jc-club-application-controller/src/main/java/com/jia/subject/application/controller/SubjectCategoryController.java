@@ -80,7 +80,7 @@ public class SubjectCategoryController {
         }
     }
 
-    //删除
+    //删除，删除并不是真正的删除没事逻辑删除，修改字段为已删除，数据还在
     @PostMapping("/deleteCategoryByPrimary")
     public Result<Boolean> deleteCategoryByPrimary(@RequestBody SubjectCategoryDTO subjectCategoryDTO){
         try{
@@ -98,6 +98,25 @@ public class SubjectCategoryController {
             log.info("SubjectCategoryController.add.error:{}",e.getMessage(),e);
             return Result.fail(e.getMessage());
         }
-
     }
+
+    //更新
+    @PostMapping("/updateCategory")
+    public Result<Boolean> updateCategory(@RequestBody SubjectCategoryDTO subjectCategoryDTO){
+        try{
+            if(log.isInfoEnabled()){
+                log.info("SubjectCategoryController.updateCategory.dto:{}", JSON.toJSONString(subjectCategoryDTO));
+            }
+            //判断
+            Preconditions.checkNotNull(subjectCategoryDTO.getCategoryType(),"分类类型不能为空");
+            Preconditions.checkArgument(!StringUtils.isBlank(subjectCategoryDTO.getCategoryName()),"分类名字不能为空");
+            Preconditions.checkNotNull(subjectCategoryDTO.getParentId(),"父id不能为空");
+            //转换
+            return null;
+        }catch (Exception e){
+            log.info("SubjectCategoryController.add.error:{}",e.getMessage(),e);
+            return Result.fail(e.getMessage());
+        }
+    }
+
 }
