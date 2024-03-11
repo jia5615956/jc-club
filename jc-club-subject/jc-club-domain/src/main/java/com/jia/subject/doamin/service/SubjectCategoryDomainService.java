@@ -16,4 +16,6 @@ public interface SubjectCategoryDomainService {
     //查询分类
     List<SubjectCategoryBO> queryCategory(SubjectCategoryBO subjectCategoryBO);
 
+    //删除
+    Boolean deleteCategoryByPrimary(SubjectCategoryBO subjectCategoryBO);
 }

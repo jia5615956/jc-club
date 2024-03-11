@@ -37,4 +37,14 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
         List<SubjectCategoryBO> boList = SubjectCategoryConvert.INSTANCE.convertListToCategoryBOList(categoryList);
         return boList;
     }
+
+
+    //删除
+    @Override
+    public Boolean deleteCategoryByPrimary(SubjectCategoryBO subjectCategoryBO) {
+        //转换
+        SubjectCategory subjectCategory = SubjectCategoryConvert.INSTANCE.convertBoToCategory(subjectCategoryBO);
+        boolean b = subjectCategoryService.deleteById(subjectCategory.getId());
+        return b;
+    }
 }

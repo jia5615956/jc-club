@@ -8,8 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="jc-club-subject-api" />
         <module name="jc-club-infra" />
-        <module name="jc-club-application-job" />
         <module name="jc-club-starter" />
+        <module name="jc-club-application-job" />
         <module name="jc-club-common" />
         <module name="jc-club-application-controller" />
         <module name="jc-club-domain" />

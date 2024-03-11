@@ -79,4 +79,25 @@ public class SubjectCategoryController {
             return Result.fail(e.getMessage());
         }
     }
+
+    //删除
+    @PostMapping("/deleteCategoryByPrimary")
+    public Result<Boolean> deleteCategoryByPrimary(@RequestBody SubjectCategoryDTO subjectCategoryDTO){
+        try{
+            if(log.isInfoEnabled()){
+                log.info("SubjectCategoryController.deleteCategoryByPrimary.dto:{}", JSON.toJSONString(subjectCategoryDTO));
+            }
+            //判断，id不为空
+            Preconditions.checkNotNull(subjectCategoryDTO.getId(),"id不能为空");
+            //将DTO转换为BO
+            SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.convertDTOToCategoryBO(subjectCategoryDTO);
+            //调用服务
+            Boolean flag = subjectCategoryDomainService.deleteCategoryByPrimary(subjectCategoryBO);
+            return Result.ok(flag);
+        }catch (Exception e){
+            log.info("SubjectCategoryController.add.error:{}",e.getMessage(),e);
+            return Result.fail(e.getMessage());
+        }
+
+    }
 }

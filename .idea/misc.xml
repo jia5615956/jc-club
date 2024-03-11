@@ -5,6 +5,15 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/jc-club-subject/pom.xml" />
+        <option value="$PROJECT_DIR$/jc-club-subject/jc-club-application/pom.xml" />
+        <option value="$PROJECT_DIR$/jc-club-subject/jc-club-common/pom.xml" />
+        <option value="$PROJECT_DIR$/jc-club-subject/jc-club-domain/pom.xml" />
+        <option value="$PROJECT_DIR$/jc-club-subject/jc-club-infra/pom.xml" />
+        <option value="$PROJECT_DIR$/jc-club-subject/jc-club-starter/pom.xml" />
+        <option value="$PROJECT_DIR$/jc-club-subject/jc-club-subject-api/pom.xml" />
+        <option value="$PROJECT_DIR$/jc-club-subject/jc-club-application/jc-club-application-controller/pom.xml" />
+        <option value="$PROJECT_DIR$/jc-club-subject/jc-club-application/jc-club-application-job/pom.xml" />
+        <option value="$PROJECT_DIR$/jc-club-subject/jc-club-application/jc-club-application-mq/pom.xml" />
       </list>
     </option>
   </component>
