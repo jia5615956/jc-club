@@ -56,13 +56,13 @@ public class SubjectCategoryController {
             return Result.ok(subjectCategoryDTOList);
         }catch (Exception e){
             log.info("SubjectCategoryController.add.error:{}",e.getMessage(),e);
-            return Result.fail(e.getMessage());
+            return Result.fail("查询失败");
         }
     }
 
     //根据主键查询
     @PostMapping("/queryCategoryByPrimary")
-    public Result<SubjectCategory> queryCategoryByPrimary(@RequestBody SubjectCategoryDTO subjectCategoryDTO){
+    public Result<SubjectCategoryDTO> queryCategoryByPrimary(@RequestBody SubjectCategoryDTO subjectCategoryDTO){
         try{
             if(log.isInfoEnabled()){
                 log.info("SubjectCategoryController.queryCategoryByPrimary.dto:{}", JSON.toJSONString(subjectCategoryDTO));
@@ -73,7 +73,9 @@ public class SubjectCategoryController {
             SubjectCategoryBO subjectCategoryBO = SubjectCategoryDTOConverter.INSTANCE.convertDTOToCategoryBO(subjectCategoryDTO);
             //调用服务
             List<SubjectCategoryBO> boList = subjectCategoryDomainService.queryCategory(subjectCategoryBO);
-            return Result.ok(boList);
+            //转换
+            List<SubjectCategoryDTO> subjectCategoryDTOS = SubjectCategoryDTOConverter.INSTANCE.convertBOListToDTOList(boList);
+            return Result.ok(subjectCategoryDTOS);
         }catch (Exception e){
             log.info("SubjectCategoryController.add.error:{}",e.getMessage(),e);
             return Result.fail(e.getMessage());
