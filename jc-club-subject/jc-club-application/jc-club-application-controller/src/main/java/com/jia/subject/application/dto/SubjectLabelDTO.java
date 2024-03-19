@@ -19,7 +19,7 @@ public class SubjectLabelDTO {
      */
     private Integer sortNum;
 
-    private String categoryId;
+    private Long categoryId;
 
     private Integer isDeleted;
 

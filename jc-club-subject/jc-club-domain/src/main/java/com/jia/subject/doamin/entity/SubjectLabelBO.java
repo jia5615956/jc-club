@@ -18,7 +18,7 @@ public class SubjectLabelBO {
      */
     private Integer sortNum;
 
-    private String categoryId;
+    private Long categoryId;
 
     private Integer isDeleted;
 }

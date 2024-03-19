@@ -6,11 +6,17 @@ import com.jia.subject.doamin.entity.SubjectCategoryBO;
 import com.jia.subject.doamin.entity.SubjectLabelBO;
 import com.jia.subject.doamin.service.SubjectLabelDomainService;
 import com.jia.subject.infra.basic.entity.SubjectLabel;
+import com.jia.subject.infra.basic.entity.SubjectMapping;
 import com.jia.subject.infra.basic.service.SubjectLabelService;
+import com.jia.subject.infra.basic.service.SubjectMappingService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -18,6 +24,9 @@ public class SubjectLabelDomainServiceImpl implements SubjectLabelDomainService 
 
     @Resource
     private SubjectLabelService subjectLabelService;
+
+    @Resource
+    private SubjectMappingService subjectMappingService;
 
     @Override
     public void add(SubjectLabelBO subjectLabelBO) {
@@ -49,11 +58,33 @@ public class SubjectLabelDomainServiceImpl implements SubjectLabelDomainService 
 
     @Override
     public List<SubjectLabelBO> queryLabelByCategoryId(SubjectLabelBO subjectLabelBO) {
-        //转换
-        SubjectLabel subjectLabel = SubjectLabelConvert.INSTANCE.SubjectLabelBOTOSubjectLabel(subjectLabelBO);
-        List<SubjectLabel> subjectLabels = subjectLabelService.queryLabel(subjectLabel);
-        //转换
-        List<SubjectLabelBO> subjectLabelBOList = SubjectLabelConvert.INSTANCE.SubjectLabelBOListTOSubjectLabelList(subjectLabels);
-        return subjectLabelBOList;
+        //获取CategoryId
+        Long categoryId = subjectLabelBO.getCategoryId();
+        //新建对象
+        SubjectMapping subjectMapping = new SubjectMapping();
+        subjectMapping.setCategoryId(categoryId);
+        subjectMapping.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        //先去映射表中差是否存在
+        List<SubjectMapping> subjectMappingList = subjectMappingService.queryLabelId(subjectMapping);
+        //判断
+        if(CollectionUtils.isEmpty(subjectMappingList)){
+            return Collections.emptyList();
+        }
+        //通过上面拿到的subjectMappingList遍历里面的labelId
+        List<Long> labelIdList = subjectMappingList.stream().map(SubjectMapping::getLabelId).collect(Collectors.toList());
+        //开始循环查找
+        List<SubjectLabel> subjectLabelList = subjectLabelService.batchQueryById(labelIdList);
+        //遍历，将查询到的subjectLabelList封装到subjectLabelBO
+        LinkedList<SubjectLabelBO> labelBOLinkedList = new LinkedList<>();
+        subjectLabelList.forEach(label->{
+            SubjectLabelBO labelBO = new SubjectLabelBO();
+            labelBO.setLabelName(label.getLabelName());
+            labelBO.setCategoryId(label.getCategoryId());
+            labelBO.setSortNum(label.getSortNum());
+            labelBO.setId(label.getId());
+            labelBOLinkedList.add(labelBO);
+        });
+
+        return labelBOLinkedList;
     }
 }

@@ -97,6 +97,8 @@ public class SubjectLabelController {
             if (log.isInfoEnabled()) {
                 log.info("SubjectLabelController.queryLabelByCategoryId.dto:{}", JSON.toJSONString(subjectLabelDTO));
             }
+            //判断
+            Preconditions.checkNotNull(subjectLabelDTO.getCategoryId(),"分类Id不能为空");
             //转换
             SubjectLabelBO subjectLabelBO = SubjectLabelDTOConvert.INSTANCE.subjectLabelDTOTOSubjectLabelBO(subjectLabelDTO);
             //调用服务

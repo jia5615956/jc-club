@@ -1,5 +1,0 @@
-com\jia\subject\application\controller\SubjectController.class
-com\jia\subject\application\convert\SubjectCategoryDTOConverterImpl.class
-com\jia\subject\application\controller\SubjectCategoryController.class
-com\jia\subject\application\convert\SubjectCategoryDTOConverter.class
-com\jia\subject\application\dto\SubjectCategoryDTO.class
