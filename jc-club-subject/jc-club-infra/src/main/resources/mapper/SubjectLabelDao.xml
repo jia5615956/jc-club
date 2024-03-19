@@ -198,8 +198,9 @@
     <select id="batchQueryById" resultMap="SubjectLabelMap">
         select
         id, label_name, sort_num,category_id, created_by, created_time, update_by, is_deleted, update_time
-            from subject_label where id in
-        <foreach open="(" close=")" separator="," collection="labelIdList" item="id">
+            from subject_label
+             where id in
+        <foreach open="(" close=")" separator="," collection="list" item="id">
             #{id}
         </foreach>
     </select>
