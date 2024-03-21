@@ -6,14 +6,15 @@ import java.util.Date;
 import java.io.Serializable;
 
 /**
- * 题目分类关系表(SubjectMapping)实体类
+ * 单选题信息表(SubjectRadio)实体类
  *
  * @author makejava
- * @since 2024-03-18 13:31:02
+ * @since 2024-03-20 13:31:40
  */
+
 @Data
-public class SubjectMapping implements Serializable {
-    private static final long serialVersionUID = -56756270611306598L;
+public class SubjectRadio implements Serializable {
+    private static final long serialVersionUID = 417571804260515485L;
     /**
      * 主键
      */
@@ -23,13 +24,17 @@ public class SubjectMapping implements Serializable {
      */
     private Long subjectId;
     /**
-     * 分类id
+     * a,b,c,d
      */
-    private Long categoryId;
+    private Integer optionType;
     /**
-     * 标签id
+     * 选项内容
      */
-    private Long labelId;
+    private String optionContent;
+    /**
+     * 是否正确
+     */
+    private Integer isCorrect;
     /**
      * 创建人
      */
@@ -48,7 +53,6 @@ public class SubjectMapping implements Serializable {
     private Date updateTime;
     
     private Integer isDeleted;
-
 
 
 }

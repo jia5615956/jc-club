@@ -30,6 +30,9 @@ public class SubjectCategoryController {
     @PostMapping("/add")
     public Result<Boolean> add(@RequestBody SubjectCategoryDTO subjectCategoryDTO){
         try {
+            if(log.isInfoEnabled()){
+                log.info("SubjectCategoryController.add.dto:{}", JSON.toJSONString(subjectCategoryDTO));
+            }
             Preconditions.checkNotNull(subjectCategoryDTO.getCategoryType(),"分类类型不能为空");
             Preconditions.checkArgument(!StringUtils.isBlank(subjectCategoryDTO.getCategoryName()),"分类名字不能为空");
             Preconditions.checkNotNull(subjectCategoryDTO.getParentId(),"父id不能为空");
