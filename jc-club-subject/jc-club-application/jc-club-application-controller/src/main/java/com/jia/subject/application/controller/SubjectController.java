@@ -8,8 +8,10 @@ import com.jia.subject.application.dto.SubjectInfoDTO;
 import com.jia.subject.common.entity.Result;
 import com.jia.subject.doamin.entity.SubjectAnswerBO;
 import com.jia.subject.doamin.entity.SubjectInfoBO;
+import com.jia.subject.doamin.service.SubjectInfoDomainService;
 import com.jia.subject.infra.basic.entity.SubjectCategory;
 import com.jia.subject.infra.basic.service.SubjectCategoryService;
+import com.jia.subject.infra.basic.service.SubjectInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +27,7 @@ public class SubjectController {
 
 
     @Resource
-    private SubjectCategoryService subjectCategoryService;
+    private SubjectInfoDomainService subjectInfoDomainService;
 
     //新增
     public Result add(@RequestBody SubjectInfoDTO subjectInfoDTO){
@@ -46,7 +48,7 @@ public class SubjectController {
             List<SubjectAnswerBO> subjectAnswerBOS = SubjectAnswerDTOConvert.INSTANCE.subjectAnswerDTOTOSubjectAnswerBO(subjectInfoDTO.getOptionList());
             subjectInfoBO.setOptionList(subjectAnswerBOS);
             //调用服务
-
+            subjectInfoDomainService.add(subjectInfoBO);
             return null;
         }catch (Exception e){
             log.info("SubjectController.add.error:{}",e.getMessage(),e);
