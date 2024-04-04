@@ -6,8 +6,10 @@ import lombok.Data;
 @Data
 public class SubjectAnswerBO {
 
-    //主键
-    private Integer id;
+    /**
+     * 答案选项标识
+     */
+    private Long optionType;
 
     //题目名称
     private String optionContent;

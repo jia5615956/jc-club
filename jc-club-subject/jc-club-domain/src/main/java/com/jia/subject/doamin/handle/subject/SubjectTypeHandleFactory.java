@@ -1,6 +1,6 @@
 package com.jia.subject.doamin.handle.subject;
 
-import com.jia.subject.common.enums.ResultCodeEnum;
+
 import com.jia.subject.common.enums.SubjectInfoTypeEnum;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;

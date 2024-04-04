@@ -43,6 +43,8 @@ public class SubjectInfoBO {
 
     private List<Long> labelIds;
 
+    //标签名字
+    private List<String> labelName;
     //答案选项
     private List<SubjectAnswerBO> optionList;
 }

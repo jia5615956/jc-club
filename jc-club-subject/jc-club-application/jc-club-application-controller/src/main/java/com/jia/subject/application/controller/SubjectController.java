@@ -15,15 +15,14 @@ import com.jia.subject.infra.basic.service.SubjectCategoryService;
 import com.jia.subject.infra.basic.service.SubjectInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
 @Slf4j
+@RequestMapping("/subject")
 public class SubjectController {
 
 
@@ -31,6 +30,7 @@ public class SubjectController {
     private SubjectInfoDomainService subjectInfoDomainService;
 
     //新增
+    @PostMapping("/add")
     public Result add(@RequestBody SubjectInfoDTO subjectInfoDTO){
         try {
             if(log.isInfoEnabled()){
