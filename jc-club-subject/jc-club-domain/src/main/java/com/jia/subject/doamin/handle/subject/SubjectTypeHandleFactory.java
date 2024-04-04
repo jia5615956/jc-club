@@ -2,6 +2,7 @@ package com.jia.subject.doamin.handle.subject;
 
 import com.jia.subject.common.enums.ResultCodeEnum;
 import com.jia.subject.common.enums.SubjectInfoTypeEnum;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 //题目类型工厂
 @Component
-public class SubjectTypeHandleFactory {
+public class SubjectTypeHandleFactory implements InitializingBean {
 
     @Resource
     private List<SubjectTypeHandle> subjectTypeHandleList;
@@ -24,4 +25,10 @@ public class SubjectTypeHandleFactory {
     }
 
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+       for(SubjectTypeHandle subjectTypeHandle : subjectTypeHandleList){
+            handleMap.put(subjectTypeHandle.getHandleType(),subjectTypeHandle);
+       }
+    }
 }

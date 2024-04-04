@@ -10,6 +10,7 @@ import com.jia.subject.doamin.entity.SubjectAnswerBO;
 import com.jia.subject.doamin.entity.SubjectInfoBO;
 import com.jia.subject.doamin.service.SubjectInfoDomainService;
 import com.jia.subject.infra.basic.entity.SubjectCategory;
+import com.jia.subject.infra.basic.entity.SubjectInfo;
 import com.jia.subject.infra.basic.service.SubjectCategoryService;
 import com.jia.subject.infra.basic.service.SubjectInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +50,28 @@ public class SubjectController {
             subjectInfoBO.setOptionList(subjectAnswerBOS);
             //调用服务
             subjectInfoDomainService.add(subjectInfoBO);
-            return null;
+            return Result.ok(true);
+        }catch (Exception e){
+            log.info("SubjectController.add.error:{}",e.getMessage(),e);
+            return Result.fail(e.getMessage());
+        }
+    }
+
+    //查询
+    public Result<SubjectInfoDTO> querySubjectInfo(@RequestBody SubjectInfoDTO subjectInfoDTO){
+        try {
+            if(log.isInfoEnabled()){
+                log.info("SubjectController.querySubjectInfo.dto:{}", JSON.toJSONString(subjectInfoDTO));
+            }
+            //判断非空字段
+            Preconditions.checkNotNull(subjectInfoDTO.getId(),"题目id不能为空");
+            Preconditions.checkNotNull(subjectInfoDTO.getLabelIds(),"标签id不能为空");
+            Preconditions.checkNotNull(subjectInfoDTO.getCategoryIds(),"分类id不能为空");
+            //转换
+            SubjectInfoBO subjectInfoBO = SubjectInfoDTOConvert.INSTANCE.subjectInfoDTOTOSubjectInfoBO(subjectInfoDTO);
+            SubjectInfoBO PageResultBO = subjectInfoDomainService.querySubjectInfo(subjectInfoBO);
+            SubjectInfoDTO infoDTO = SubjectInfoDTOConvert.INSTANCE.subjectInfoBOTOSubjectInfoDTO(PageResultBO);
+            return Result.ok(infoDTO);
         }catch (Exception e){
             log.info("SubjectController.add.error:{}",e.getMessage(),e);
             return Result.fail(e.getMessage());

@@ -15,7 +15,7 @@ public interface SubjectInfoConvert {
 
     SubjectInfoConvert INSTANCE = Mappers.getMapper(SubjectInfoConvert.class);
 
-    SubjectInfo convertBoToCategory(SubjectInfoBO subjectInfoBO);
+    SubjectInfo convertBoToSubjectInfo(SubjectInfoBO subjectInfoBO);
 
 
 

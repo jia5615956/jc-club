@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 单选题信息表(SubjectRadio)表服务实现类
@@ -42,6 +43,12 @@ public class SubjectRadioServiceImpl implements SubjectRadioService {
         this.subjectRadioDao.insert(subjectRadio);
         return subjectRadio;
     }
+
+    @Override
+    public void batchInsert(List<SubjectRadio> subjectRadioList) {
+        subjectRadioDao.insertBatch(subjectRadioList);
+    }
+
 
     /**
      * 修改数据

@@ -25,6 +25,7 @@ public class SubjectCategoryDomainServiceImpl implements SubjectCategoryDomainSe
         SubjectCategory subjectCategory = SubjectCategoryConvert.INSTANCE.convertBoToCategory(subjectCategoryBO);
         //将是否删除的值赋值
         subjectCategory.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+
         subjectCategoryService.insert(subjectCategory);
     }
 
