@@ -2,6 +2,8 @@ package com.jia.subject.infra.basic.service;
 
 import com.jia.subject.infra.basic.entity.SubjectMultiple;
 
+import java.util.List;
+
 /**
  * 多选题信息表(SubjectMultiple)表服务接口
  *
@@ -26,6 +28,9 @@ public interface SubjectMultipleService {
      * @return 实例对象
      */
     SubjectMultiple insert(SubjectMultiple subjectMultiple);
+
+    //批量新增数据
+    void batchInsert(List<SubjectMultiple> subjectMultipleList);
 
     /**
      * 修改数据
