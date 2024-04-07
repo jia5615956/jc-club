@@ -20,6 +20,10 @@ public interface SubjectInfoConvert {
 
     SubjectInfoBO subjectOptionBOTOSubjectInfo(SubjectOptionBO subjectOptionBO,SubjectInfo subjectInfo);
 
+    List<SubjectInfoBO> convertListInfoToBO(List<SubjectInfo> subjectInfoList);
+
+
+
 
 
 }

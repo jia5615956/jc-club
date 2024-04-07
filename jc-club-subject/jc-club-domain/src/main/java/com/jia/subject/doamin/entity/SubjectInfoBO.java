@@ -1,12 +1,15 @@
 package com.jia.subject.doamin.entity;
 
 
+import com.jia.subject.common.entity.PageInfo;
+import com.jia.subject.common.entity.PageResult;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class SubjectInfoBO {
+public class SubjectInfoBO extends PageInfo implements Serializable {
 
     /**
      * 主键
@@ -47,4 +50,9 @@ public class SubjectInfoBO {
     private List<String> labelName;
     //答案选项
     private List<SubjectAnswerBO> optionList;
+
+    private Long categoryId;
+
+    private Long labelId;
+
 }

@@ -1,14 +1,16 @@
 package com.jia.subject.common.entity;
 
+
 import lombok.Data;
 
+
 import java.io.Serializable;
+
 import java.util.Collections;
 import java.util.List;
 
 @Data
 public class PageResult<T> implements Serializable {
-
     private Integer pageNo = 1;
 
     private Integer pageSize = 20;
@@ -50,3 +52,5 @@ public class PageResult<T> implements Serializable {
     }
 
 }
+
+

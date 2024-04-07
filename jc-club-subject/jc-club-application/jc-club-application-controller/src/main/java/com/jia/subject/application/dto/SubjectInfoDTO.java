@@ -41,7 +41,10 @@ public class SubjectInfoDTO {
 
     private List<Long> labelIds;
 
-
     //答案选项
     private List<SubjectAnswerDTO> optionList;
+
+    private Long categoryId;
+
+    private Long labelId;
 }

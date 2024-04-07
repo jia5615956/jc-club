@@ -1,6 +1,7 @@
 package com.jia.subject.doamin.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.jia.subject.common.entity.PageResult;
 import com.jia.subject.common.enums.IsDeletedFlagEnum;
 import com.jia.subject.doamin.convert.SubjectInfoConvert;
 import com.jia.subject.doamin.entity.SubjectInfoBO;
@@ -80,5 +81,26 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
         SubjectInfoBO info = SubjectInfoConvert.INSTANCE.subjectOptionBOTOSubjectInfo(subjectOptionBO,subjectInfo);
         List<String> lebelNameList = new LinkedList<>();
         return info;
+    }
+
+    //查询题目列表
+    @Override
+    public PageResult<SubjectInfoBO> getSubjectPage(SubjectInfoBO subjectInfoBO) {
+        PageResult<SubjectInfoBO> pageResult = new PageResult<>();
+        pageResult.setPageNo(subjectInfoBO.getPageNo());
+        pageResult.setPageSize(subjectInfoBO.getPageSize());
+        int start = (subjectInfoBO.getPageNo() - 1) * subjectInfoBO.getPageSize();
+        SubjectInfo subjectInfo = SubjectInfoConvert.INSTANCE.convertBoToSubjectInfo(subjectInfoBO);
+        int count = subjectInfoService.countByCondition(subjectInfo, subjectInfoBO.getCategoryId()
+                , subjectInfoBO.getLabelId());
+        if (count == 0) {
+            return pageResult;
+        }
+        List<SubjectInfo> subjectInfoList = subjectInfoService.queryPage(subjectInfo, subjectInfoBO.getCategoryId()
+                , subjectInfoBO.getLabelId(), start, subjectInfoBO.getPageSize());
+        List<SubjectInfoBO> subjectInfoBOS = SubjectInfoConvert.INSTANCE.convertListInfoToBO(subjectInfoList);
+        pageResult.setResult(subjectInfoBOS);
+        pageResult.setTotal(count);
+        return pageResult;
     }
 }
