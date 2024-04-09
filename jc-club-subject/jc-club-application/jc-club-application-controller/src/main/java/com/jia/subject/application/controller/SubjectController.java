@@ -7,7 +7,6 @@ import com.jia.subject.application.convert.SubjectInfoDTOConvert;
 import com.jia.subject.application.dto.SubjectInfoDTO;
 import com.jia.subject.common.entity.PageResult;
 import com.jia.subject.common.entity.Result;
-import com.jia.subject.doamin.convert.SubjectInfoConvert;
 import com.jia.subject.doamin.entity.SubjectAnswerBO;
 import com.jia.subject.doamin.entity.SubjectInfoBO;
 import com.jia.subject.doamin.service.SubjectInfoDomainService;
@@ -63,8 +62,6 @@ public class SubjectController {
             Preconditions.checkNotNull(subjectInfoDTO.getLabelId(), "标签id不能为空");
             //转换
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConvert.INSTANCE.subjectInfoDTOTOSubjectInfoBO(subjectInfoDTO);
-//            subjectInfoBO.setPageNo(subjectInfoDTO.getPageNo());
-//            subjectInfoBO.setPageSize(subjectInfoDTO.getPageSize());
             PageResult<SubjectInfoBO> boPageResult = subjectInfoDomainService.getSubjectPage(subjectInfoBO);
             return Result.ok(boPageResult);
         }catch (Exception e){

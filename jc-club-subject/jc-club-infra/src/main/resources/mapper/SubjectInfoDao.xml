@@ -206,8 +206,8 @@
         a.id = b.subject_id
         and b.category_id = #{categoryId}
         and b.label_id = #{labelId}
-        and a.is_deleted = 0
-        and b.is_deleted = 0
+        and a.is_deleted = 1
+        and b.is_deleted = 1
         <if test="subjectInfo.subjectDifficult != null">
             and a.subject_difficult = #{subjectInfo.subjectDifficult}
         </if>
@@ -236,8 +236,8 @@
         a.id = b.subject_id
         and b.category_id = #{categoryId}
         and b.label_id = #{labelId}
-        and a.is_deleted = 0
-        and b.is_deleted = 0
+        and a.is_deleted = 1
+        and b.is_deleted = 1
         <if test="subjectInfo.subjectDifficult != null">
             and a.subject_difficult = #{subjectInfo.subjectDifficult}
         </if>

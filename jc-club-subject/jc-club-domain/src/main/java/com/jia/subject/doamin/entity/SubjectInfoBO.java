@@ -2,7 +2,6 @@ package com.jia.subject.doamin.entity;
 
 
 import com.jia.subject.common.entity.PageInfo;
-import com.jia.subject.common.entity.PageResult;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -54,5 +53,8 @@ public class SubjectInfoBO extends PageInfo implements Serializable {
     private Long categoryId;
 
     private Long labelId;
+
+    //标签名字
+    List<String> lebelNameList;
 
 }

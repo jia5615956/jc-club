@@ -12,6 +12,7 @@ import com.jia.subject.doamin.service.SubjectInfoDomainService;
 import com.jia.subject.infra.basic.entity.SubjectInfo;
 import com.jia.subject.infra.basic.entity.SubjectMapping;
 import com.jia.subject.infra.basic.service.SubjectInfoService;
+import com.jia.subject.infra.basic.service.SubjectLabelService;
 import com.jia.subject.infra.basic.service.SubjectMappingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,9 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
     @Resource
     private SubjectMappingService subjectMappingService;
 
+    @Resource
+    private SubjectLabelService subjectLabelService;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void add(SubjectInfoBO subjectInfoBO) {
@@ -50,7 +54,6 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
         SubjectTypeHandle handle = subjectTypeHandleFactory.getHandle(subjectInfo.getSubjectType());
         //subjectInfo插入主键是自动生成的，后面的答案内容需要这个
         subjectInfoBO.setId(subjectInfo.getId());
-        System.out.println(subjectInfoBO.getId());
         handle.add(subjectInfoBO);
         //将映射id插入
         List<Long> categoryIds = subjectInfoBO.getCategoryIds();
@@ -62,6 +65,7 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
                 subjectMapping.setCategoryId(categoryId);
                 subjectMapping.setSubjectId(subjectInfo.getId());
                 subjectMapping.setLabelId(labelId);
+                subjectMapping.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
                 subjectMappingList.add(subjectMapping);
             });
         });
@@ -79,7 +83,9 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
         SubjectOptionBO subjectOptionBO = handle.query(subjectInfo.getId());
         //转换
         SubjectInfoBO info = SubjectInfoConvert.INSTANCE.subjectOptionBOTOSubjectInfo(subjectOptionBO,subjectInfo);
+        //查询标签名字
         List<String> lebelNameList = new LinkedList<>();
+        //根据category_id获取标签名字
         return info;
     }
 

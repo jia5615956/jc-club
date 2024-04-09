@@ -2,10 +2,11 @@ package com.jia.subject.doamin.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class SubjectOptionBO {
+public class SubjectOptionBO implements Serializable {
     //题目答案
     private String subjectAnswer;
 
