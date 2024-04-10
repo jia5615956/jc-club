@@ -85,7 +85,8 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
         SubjectInfoBO info = SubjectInfoConvert.INSTANCE.subjectOptionBOTOSubjectInfo(subjectOptionBO,subjectInfo);
         //查询标签名字
         List<String> lebelNameList = new LinkedList<>();
-        //根据category_id获取标签名字
+        //根据category_id与mapping查获取标签名字
+        
         return info;
     }
 
