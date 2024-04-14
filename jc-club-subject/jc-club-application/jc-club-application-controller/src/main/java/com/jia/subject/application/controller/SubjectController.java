@@ -50,9 +50,9 @@ public class SubjectController {
         }
     }
 
-    //查询
+    //查询题目列表
     @PostMapping("/getSubjectPage")
-    public Result<SubjectInfoDTO> getSubjectPage(@RequestBody SubjectInfoDTO subjectInfoDTO){
+    public Result<PageResult<SubjectInfoDTO>> getSubjectPage(@RequestBody SubjectInfoDTO subjectInfoDTO){
         try {
             if(log.isInfoEnabled()){
                 log.info("SubjectController.getSubjectPage.dto:{}", JSON.toJSONString(subjectInfoDTO));
@@ -64,6 +64,28 @@ public class SubjectController {
             SubjectInfoBO subjectInfoBO = SubjectInfoDTOConvert.INSTANCE.subjectInfoDTOTOSubjectInfoBO(subjectInfoDTO);
             PageResult<SubjectInfoBO> boPageResult = subjectInfoDomainService.getSubjectPage(subjectInfoBO);
             return Result.ok(boPageResult);
+        }catch (Exception e){
+           log.info("SubjectController.add.error:{}",e.getMessage(),e);
+            return Result.fail(e.getMessage());
+        }
+    }
+
+
+    //查询题目详情
+    @PostMapping("/querySubjectInfo")
+    public Result<SubjectInfoDTO> querySubjectInfo(@RequestBody SubjectInfoDTO subjectInfoDTO){
+        try{
+            if(log.isInfoEnabled()){
+                log.info("SubjectController.querySubjectInfo.dto:{}", JSON.toJSONString(subjectInfoDTO));
+            }
+            //判断
+            Preconditions.checkNotNull(subjectInfoDTO.getId(),"题目Id不能为空");
+            //转换
+            SubjectInfoBO subjectInfoBO = SubjectInfoDTOConvert.INSTANCE.subjectInfoDTOTOSubjectInfoBO(subjectInfoDTO);
+            SubjectInfoBO querySubjectInfo = subjectInfoDomainService.querySubjectInfo(subjectInfoBO);
+            //转换
+            SubjectInfoDTO querySubjectInfoDTO = SubjectInfoDTOConvert.INSTANCE.subjectInfoBOTOSubjectInfoDTO(querySubjectInfo);
+            return Result.ok(querySubjectInfoDTO);
         }catch (Exception e){
             log.info("SubjectController.add.error:{}",e.getMessage(),e);
             return Result.fail(e.getMessage());

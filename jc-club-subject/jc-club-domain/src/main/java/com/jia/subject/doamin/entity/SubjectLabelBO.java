@@ -2,8 +2,10 @@ package com.jia.subject.doamin.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class SubjectLabelBO {
+public class SubjectLabelBO implements Serializable {
 
     /**
      * 主键

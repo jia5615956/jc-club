@@ -38,23 +38,36 @@ public class SubjectInfoBO extends PageInfo implements Serializable {
      * 题目解析
      */
     private String subjectParse;
-    //题目答案
+
+    /**
+     * 题目答案
+     */
     private String subjectAnswer;
 
+    /**
+     * 分类id
+     */
     private List<Long> categoryIds;
 
+    /**
+     * 标签id
+     */
     private List<Long> labelIds;
 
-    //标签名字
+    /**
+     * 标签name
+     */
     private List<String> labelName;
-    //答案选项
+
+    /**
+     * 答案选项
+     */
     private List<SubjectAnswerBO> optionList;
 
     private Long categoryId;
 
     private Long labelId;
 
-    //标签名字
-    List<String> lebelNameList;
+
 
 }

@@ -10,6 +10,7 @@ import com.jia.subject.doamin.handle.subject.SubjectTypeHandle;
 import com.jia.subject.doamin.handle.subject.SubjectTypeHandleFactory;
 import com.jia.subject.doamin.service.SubjectInfoDomainService;
 import com.jia.subject.infra.basic.entity.SubjectInfo;
+import com.jia.subject.infra.basic.entity.SubjectLabel;
 import com.jia.subject.infra.basic.entity.SubjectMapping;
 import com.jia.subject.infra.basic.service.SubjectInfoService;
 import com.jia.subject.infra.basic.service.SubjectLabelService;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -76,8 +78,8 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
     //查询题目详情
     @Override
     public SubjectInfoBO querySubjectInfo(SubjectInfoBO subjectInfoBO) {
-        //转换
-        SubjectInfo subjectInfo = SubjectInfoConvert.INSTANCE.convertBoToSubjectInfo(subjectInfoBO);
+        //调用服务查询题目信息
+        SubjectInfo subjectInfo = subjectInfoService.queryById(subjectInfoBO.getId());
         //调用工厂服务
         SubjectTypeHandle handle = subjectTypeHandleFactory.getHandle(subjectInfo.getSubjectType());
         SubjectOptionBO subjectOptionBO = handle.query(subjectInfo.getId());
@@ -86,7 +88,16 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
         //查询标签名字
         List<String> lebelNameList = new LinkedList<>();
         //根据category_id与mapping查获取标签名字
-        
+        SubjectMapping subjectMapping = new SubjectMapping();
+        subjectMapping.setSubjectId(info.getId());
+        subjectMapping.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        List<SubjectMapping> subjectMappings = subjectMappingService.queryLabelId(subjectMapping);
+        //遍历去查询labelName
+        subjectMappings.forEach(mapping->{
+            SubjectLabel subjectLabel = subjectLabelService.queryById(mapping.getLabelId());
+            lebelNameList.add(subjectLabel.getLabelName());
+        });
+        info.setLabelName(lebelNameList);
         return info;
     }
 
@@ -106,6 +117,18 @@ public class SubjectInfoDomainServiceImpl implements SubjectInfoDomainService {
         List<SubjectInfo> subjectInfoList = subjectInfoService.queryPage(subjectInfo, subjectInfoBO.getCategoryId()
                 , subjectInfoBO.getLabelId(), start, subjectInfoBO.getPageSize());
         List<SubjectInfoBO> subjectInfoBOS = SubjectInfoConvert.INSTANCE.convertListInfoToBO(subjectInfoList);
+        //循环遍历获取labelName
+        subjectInfoBOS.forEach(infoBO->{
+            SubjectMapping subjectMapping = new SubjectMapping();
+            subjectMapping.setSubjectId(infoBO.getId());
+            subjectMapping.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+            List<SubjectMapping> subjectMappings = subjectMappingService.queryLabelId(subjectMapping);
+            List<Long> labelIds = subjectMappings.stream().map(SubjectMapping::getLabelId).collect(Collectors.toList());
+            //通过id查询labelName
+            List<SubjectLabel> labelList = subjectLabelService.batchQueryById(labelIds);
+            List<String> labelNames = labelList.stream().map(SubjectLabel::getLabelName).collect(Collectors.toList());
+            infoBO.setLabelName(labelNames);
+        });
         pageResult.setResult(subjectInfoBOS);
         pageResult.setTotal(count);
         return pageResult;

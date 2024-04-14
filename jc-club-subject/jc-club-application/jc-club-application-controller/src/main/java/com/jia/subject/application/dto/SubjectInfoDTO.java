@@ -1,5 +1,6 @@
 package com.jia.subject.application.dto;
 
+import com.jia.subject.doamin.entity.SubjectAnswerBO;
 import lombok.Data;
 
 import java.util.List;
@@ -34,17 +35,34 @@ public class SubjectInfoDTO {
      * 题目解析
      */
     private String subjectParse;
-    //题目答案
+
+    /**
+     * 题目答案
+     */
     private String subjectAnswer;
 
+    /**
+     * 分类id
+     */
     private List<Long> categoryIds;
 
+    /**
+     * 标签id
+     */
     private List<Long> labelIds;
 
-    //答案选项
+    /**
+     * 标签name
+     */
+    private List<String> labelName;
+
+    /**
+     * 答案选项
+     */
     private List<SubjectAnswerDTO> optionList;
 
     private Long categoryId;
 
     private Long labelId;
+
 }

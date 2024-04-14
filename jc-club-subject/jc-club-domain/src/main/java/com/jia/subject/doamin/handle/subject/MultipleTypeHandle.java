@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.jia.subject.common.enums.IsDeletedFlagEnum;
 import com.jia.subject.common.enums.SubjectInfoTypeEnum;
 import com.jia.subject.doamin.convert.MultipleSubjectConvert;
+import com.jia.subject.doamin.entity.SubjectAnswerBO;
 import com.jia.subject.doamin.entity.SubjectInfoBO;
 import com.jia.subject.doamin.entity.SubjectOptionBO;
 import com.jia.subject.infra.basic.entity.SubjectMultiple;
@@ -48,8 +49,17 @@ public class MultipleTypeHandle implements SubjectTypeHandle{
         subjectMultipleService.batchInsert(subjectMultipleList);
     }
 
+    //查询多选题题目信息
     @Override
     public SubjectOptionBO query(Long subjectId) {
-        return null;
+        SubjectMultiple subjectMultiple = new SubjectMultiple();
+        subjectMultiple.setSubjectId(subjectId);
+        //查询
+        List<SubjectMultiple> subjectMultipleList = subjectMultipleService.queryByCondition(subjectMultiple);
+        //转换
+        List<SubjectAnswerBO> subjectAnswerBOS = MultipleSubjectConvert.INSTANCE.subjectMutipleListTOSubjectAnswerList(subjectMultipleList);
+        SubjectOptionBO subjectOptionBO = new SubjectOptionBO();
+        subjectOptionBO.setOptionList(subjectAnswerBOS);
+        return subjectOptionBO;
     }
 }

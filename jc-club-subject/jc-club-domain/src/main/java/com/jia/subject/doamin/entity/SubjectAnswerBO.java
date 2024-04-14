@@ -3,8 +3,10 @@ package com.jia.subject.doamin.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class SubjectAnswerBO {
+public class SubjectAnswerBO implements Serializable {
 
     /**
      * 答案选项标识

@@ -13,6 +13,8 @@ public interface SubjectAnswerDTOConvert {
 
     SubjectAnswerDTOConvert INSTANCE = Mappers.getMapper(SubjectAnswerDTOConvert.class);
 
+    SubjectAnswerBO convertDTOToBO(SubjectAnswerDTO subjectAnswerDTO);
+
     List<SubjectAnswerBO> subjectAnswerDTOTOSubjectAnswerBO(List<SubjectAnswerDTO> subjectAnswerDTOList);
 
 }

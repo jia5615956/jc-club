@@ -48,4 +48,5 @@ public interface SubjectMultipleService {
      */
     boolean deleteById(Long id);
 
+    List<SubjectMultiple> queryByCondition(SubjectMultiple subjectMultiple);
 }
