@@ -38,8 +38,16 @@ public class JudgeTypeHandle implements SubjectTypeHandle{
         subjectJudgeService.insert(subjectJudge);
     }
 
+    //查询判断题详情
     @Override
     public SubjectOptionBO query(Long subjectId) {
-        return null;
+        SubjectJudge subjectJudge = new SubjectJudge();
+        subjectJudge.setSubjectId(subjectId);
+        List<SubjectJudge> subjectJudgeList = subjectJudgeService.queryByCondition(subjectJudge);
+        //转换
+        List<SubjectAnswerBO> subjectAnswerBOS = JudgeSubjectConvert.INSTANCE.subjectJudgeListTOSubjectAnswerBOList(subjectJudgeList);
+        SubjectOptionBO subjectOptionBO = new SubjectOptionBO();
+        subjectOptionBO.setOptionList(subjectAnswerBOS);
+        return subjectOptionBO;
     }
 }

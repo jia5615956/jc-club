@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.jia.subject.common.enums.IsDeletedFlagEnum;
 import com.jia.subject.common.enums.SubjectInfoTypeEnum;
 import com.jia.subject.doamin.convert.RadioSubjectConvert;
+import com.jia.subject.doamin.entity.SubjectAnswerBO;
 import com.jia.subject.doamin.entity.SubjectInfoBO;
 import com.jia.subject.doamin.entity.SubjectOptionBO;
 import com.jia.subject.infra.basic.entity.SubjectRadio;
@@ -48,10 +49,17 @@ public class RadioTypeHandle implements SubjectTypeHandle{
         subjectRadioService.batchInsert(subjectRadioList);
     }
 
+    //单选题查询
     @Override
     public SubjectOptionBO query(Long subjectId) {
-        SubjectRadio subjectRadio = subjectRadioService.queryById(subjectId);
+        SubjectRadio subjectRadio = new SubjectRadio();
+        subjectRadio.setSubjectId(subjectId);
+        //调用服务查询
+        List<SubjectRadio> subjectRadioList = subjectRadioService.queryByCondition(subjectRadio);
+        //转换
+        List<SubjectAnswerBO> subjectAnswerBOS = RadioSubjectConvert.INSTANCE.subjectRadioListTOSubjectAnswerBO(subjectRadioList);
         SubjectOptionBO subjectOptionBO = new SubjectOptionBO();
+        subjectOptionBO.setOptionList(subjectAnswerBOS);
         return subjectOptionBO;
     }
 }

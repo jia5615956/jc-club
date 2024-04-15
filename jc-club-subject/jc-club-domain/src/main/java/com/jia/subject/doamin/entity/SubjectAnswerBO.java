@@ -5,6 +5,8 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+
+//题目答案Bo
 @Data
 public class SubjectAnswerBO implements Serializable {
 

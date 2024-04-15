@@ -43,4 +43,5 @@ public interface SubjectBriefService {
      */
     boolean deleteById(Long id);
 
+    SubjectBrief queryByCondition(SubjectBrief subjectBrief);
 }

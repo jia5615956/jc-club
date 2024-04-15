@@ -40,9 +40,12 @@ public class BriefTypeHandle implements SubjectTypeHandle{
 
     @Override
     public SubjectOptionBO query(Long subjectId) {
-        SubjectBrief subjectBrief = subjectBriefService.queryById(subjectId);
+        SubjectBrief subjectBrief = new SubjectBrief();
+        subjectBrief.setSubjectId(subjectId);
+        SubjectBrief result = subjectBriefService.queryByCondition(subjectBrief);
         SubjectOptionBO subjectOptionBO = new SubjectOptionBO();
-        subjectOptionBO.setSubjectAnswer(subjectBrief.getSubjectAnswer());
+        subjectOptionBO.setSubjectAnswer(result.getSubjectAnswer());
         return subjectOptionBO;
+
     }
 }
