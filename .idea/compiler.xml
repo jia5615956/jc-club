@@ -2,6 +2,9 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <option name="BUILD_PROCESS_ADDITIONAL_VM_OPTIONS" value="-Djps.track.ap.dependencies=false" />
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/jc-club-oss/src/main/resources/archetype-resources" includeSubdirectories="true" />
+    </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
@@ -15,6 +18,7 @@
         <module name="jc-club-common" />
         <module name="jc-club-application-controller" />
         <module name="jc-club-domain" />
+        <module name="jc-club-oss" />
         <module name="jc-club-application-mq" />
       </profile>
     </annotationProcessing>
