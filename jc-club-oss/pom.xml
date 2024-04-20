@@ -3,10 +3,8 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.example</groupId>
   <artifactId>jc-club-oss</artifactId>
-  <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>jc-club-oss Maven Webapp</name>
-  <url>http://maven.apache.org</url>
+
 
   <dependencies>
     <dependency>
@@ -40,5 +38,15 @@
 
   <build>
     <finalName>jc-club-oss</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>8</source>
+          <target>8</target>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
