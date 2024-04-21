@@ -7,4 +7,14 @@ minio:
 storage:
   service:
     type: minio
-
+nacos:
+  config:
+    secret-key: nacos
+    access-key: nacos
+    data-id: jc-club-oss
+    group: DEFAULT_GROUP
+    server-addr: http://111.229.107.98:8848/
+    auto-refresh: true
+    remote-first: true
+    bootstrap:
+      enable: true
