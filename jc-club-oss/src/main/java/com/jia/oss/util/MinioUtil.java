@@ -29,9 +29,11 @@ public class MinioUtil {
 
 
     //上传文件
-    public void uploadFile(String bucketName, String fileName, InputStream inputStream) throws Exception {
-        minioClient.putObject(PutObjectArgs.builder().bucket(bucketName).object(fileName).stream(inputStream,-1,Integer.MAX_VALUE).build());
+    public void uploadFile(InputStream inputStream, String bucket, String objectName) throws Exception {
+        minioClient.putObject(PutObjectArgs.builder().bucket(bucket).object(objectName)
+                .stream(inputStream, -1, 5242889L).build());
     }
+
 
     //列出所有的桶
     public List<String> getAllBucket() throws Exception {
