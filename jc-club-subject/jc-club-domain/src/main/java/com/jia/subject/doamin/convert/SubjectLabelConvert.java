@@ -13,5 +13,6 @@ public interface SubjectLabelConvert {
     SubjectLabelConvert INSTANCE = Mappers.getMapper(SubjectLabelConvert.class);
     SubjectLabel SubjectLabelBOTOSubjectLabel(SubjectLabelBO subjectLabelBO);
 
-    List<SubjectLabelBO> SubjectLabelBOListTOSubjectLabelList(List<SubjectLabel> subjectLabelList);
+    List<SubjectLabelBO> SubjectLabelListTOSubjectLabelBOList(List<SubjectLabel> subjectLabelList);
+
 }

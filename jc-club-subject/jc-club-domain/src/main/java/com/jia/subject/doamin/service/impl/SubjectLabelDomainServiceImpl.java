@@ -1,12 +1,15 @@
 package com.jia.subject.doamin.service.impl;
 
+import com.jia.subject.common.enums.CategoryTypeEnum;
 import com.jia.subject.common.enums.IsDeletedFlagEnum;
 import com.jia.subject.doamin.convert.SubjectLabelConvert;
 import com.jia.subject.doamin.entity.SubjectCategoryBO;
 import com.jia.subject.doamin.entity.SubjectLabelBO;
 import com.jia.subject.doamin.service.SubjectLabelDomainService;
+import com.jia.subject.infra.basic.entity.SubjectCategory;
 import com.jia.subject.infra.basic.entity.SubjectLabel;
 import com.jia.subject.infra.basic.entity.SubjectMapping;
+import com.jia.subject.infra.basic.service.SubjectCategoryService;
 import com.jia.subject.infra.basic.service.SubjectLabelService;
 import com.jia.subject.infra.basic.service.SubjectMappingService;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,9 @@ public class SubjectLabelDomainServiceImpl implements SubjectLabelDomainService 
 
     @Resource
     private SubjectMappingService subjectMappingService;
+
+    @Resource
+    private SubjectCategoryService subjectCategoryService;
 
     @Override
     public void add(SubjectLabelBO subjectLabelBO) {
@@ -58,6 +64,18 @@ public class SubjectLabelDomainServiceImpl implements SubjectLabelDomainService 
 
     @Override
     public List<SubjectLabelBO> queryLabelByCategoryId(SubjectLabelBO subjectLabelBO) {
+        //如果当前分类是1级分类，则查询所有标签
+        SubjectCategory subjectCategory = subjectCategoryService.queryById(subjectLabelBO.getCategoryId());
+        //判断
+        if(CategoryTypeEnum.PRIMARY.getCode() == subjectCategory.getCategoryType()){
+            //一级分类
+            SubjectLabel subjectLabel = new SubjectLabel();
+            subjectLabel.setCategoryId(subjectLabelBO.getCategoryId());
+            List<SubjectLabel> subjectLabelList =subjectLabelService.queryByCondition(subjectLabel);
+            //转换
+            List<SubjectLabelBO> subjectLabelBOS = SubjectLabelConvert.INSTANCE.SubjectLabelListTOSubjectLabelBOList(subjectLabelList);
+            return subjectLabelBOS;
+        }
         //获取CategoryId
         Long categoryId = subjectLabelBO.getCategoryId();
         //新建对象

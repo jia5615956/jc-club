@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -76,5 +77,10 @@ public class SubjectLabelServiceImpl implements SubjectLabelService {
     @Override
     public List<SubjectLabel> batchQueryById(List<Long> labelIdList) {
         return subjectLabelDao.batchQueryById(labelIdList);
+    }
+
+    @Override
+    public List<SubjectLabel> queryByCondition(SubjectLabel subjectLabel) {
+        return subjectLabelDao.queryByCondition(subjectLabel);
     }
 }
