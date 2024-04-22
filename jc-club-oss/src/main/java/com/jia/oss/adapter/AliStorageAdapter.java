@@ -8,7 +8,8 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-@Service("aliStorageServiceImpl")
+
+
 public class AliStorageAdapter implements StorageAdapter {
     @Override
     public void createBucket(String bucket) {

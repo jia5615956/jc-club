@@ -4,6 +4,8 @@ import com.jia.oss.adapter.StorageAdapter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+
+
 import java.util.List;
 
 
@@ -12,9 +14,10 @@ public class FileService {
 
     private final StorageAdapter storageAdapter;
 
-    public FileService(@Qualifier("getStorageService") StorageAdapter storageAdapter) {
+    public FileService(StorageAdapter storageAdapter) {
         this.storageAdapter = storageAdapter;
     }
+
 
     //列出所有桶
    public List<String> getAllBucket(){

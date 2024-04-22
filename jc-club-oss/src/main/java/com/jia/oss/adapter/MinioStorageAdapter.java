@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 import java.io.InputStream;
 
 import java.util.List;
-@Service("minioStorageServiceImpl")
+
 public class MinioStorageAdapter implements StorageAdapter {
 
     @Resource
