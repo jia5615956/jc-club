@@ -4,6 +4,10 @@
     <option name="BUILD_PROCESS_ADDITIONAL_VM_OPTIONS" value="-Djps.track.ap.dependencies=false" />
     <excludeFromCompile>
       <directory url="file://$PROJECT_DIR$/jc-club-oss/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/jc-club-auth/jc-club-auth-application/jc-club-auth-application-job/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/jc-club-auth/jc-club-auth-common/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/jc-club-auth/jc-club-auth-domain/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/jc-club-auth/jc-club-auth-infra/src/main/resources/archetype-resources" includeSubdirectories="true" />
     </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
@@ -11,17 +15,25 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="jc-club-auth-infra" />
+        <module name="jc-club-application-controller" />
+        <module name="jc-club-domain" />
+        <module name="jc-club-auth-domain" />
+        <module name="jc-club-auth-starter" />
         <module name="jc-club-subject-api" />
         <module name="jc-club-infra" />
         <module name="jc-club-starter" />
         <module name="jc-club-application-job" />
+        <module name="jc-club-auth-common" />
         <module name="jc-club-common" />
-        <module name="jc-club-application-controller" />
-        <module name="jc-club-domain" />
         <module name="jc-club-oss" />
         <module name="jc-club-application-mq" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="17">
+      <module name="jc-club-auth-application" target="1.5" />
+      <module name="jc-club-auth-application-controller" target="1.5" />
+      <module name="jc-club-auth-application-job" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
