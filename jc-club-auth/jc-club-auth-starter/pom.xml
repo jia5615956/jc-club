@@ -22,7 +22,7 @@
     </dependency>
         <dependency>
             <groupId>com.jia</groupId>
-            <artifactId>jc-club-application-controller</artifactId>
+            <artifactId>jc-club-auth-application-controller</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
