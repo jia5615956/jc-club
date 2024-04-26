@@ -29,11 +29,6 @@ public class SaTokenConfigure {
                 SaRouter.match("/oss/**", r -> StpUtil.checkLogin());
                 SaRouter.match("/subject/subject/add", r -> StpUtil.checkPermission("subject:add"));
                 SaRouter.match("/subject/**", r -> StpUtil.checkLogin());
-            })
-            // 异常处理方法：每次setAuth函数出现异常时进入 
-            .setError(e -> {
-                return SaResult.error(e.getMessage());
-            })
-            ;
+            });
     }
 }
