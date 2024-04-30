@@ -1,10 +1,13 @@
 package com.jia.gateway.auth;
 
 import cn.dev33.satoken.stp.StpInterface;
+import com.alibaba.nacos.common.utils.StringUtils;
+import com.google.gson.Gson;
 import com.jia.gateway.redis.RedisUtil;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,20 +19,31 @@ public class StpInterfaceImpl implements StpInterface {
     @Resource
     private RedisUtil redisUtil;
 
-    private String authPrefix = "auth.permission";
+    private String authPermissionPrefix = "auth.permission";
     private String authRolePrefix = "auth.role";
 
     @Override
     public List<String> getPermissionList(Object loginId, String loginType) {
-        // 返回此 loginId 拥有的权限列表
-
-        return null;
+        return getAuth(loginId.toString(),authPermissionPrefix);
     }
 
     @Override
     public List<String> getRoleList(Object loginId, String loginType) {
-        // 返回此 loginId 拥有的角色列表
-        return null;
+        return getAuth(loginId.toString(),authRolePrefix);
+    }
+
+    private List<String> getAuth(String loginId,String prxifx){
+        //创建key
+        String buildKey = redisUtil.buildKey(prxifx, loginId.toString());
+        //通过key获取
+        String authValue = redisUtil.get(buildKey);
+        //判断是否为空
+        if (StringUtils.isBlank(authValue)) {
+            //去数据库查找
+            return Collections.emptyList();
+        }
+        List<String> roleList = new Gson().fromJson(authValue, List.class);
+        return roleList;
     }
 
 }
