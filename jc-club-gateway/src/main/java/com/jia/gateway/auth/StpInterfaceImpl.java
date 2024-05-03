@@ -42,8 +42,8 @@ public class StpInterfaceImpl implements StpInterface {
             //去数据库查找
             return Collections.emptyList();
         }
-        List<String> roleList = new Gson().fromJson(authValue, List.class);
-        return roleList;
+
+        return new Gson().fromJson(authValue, List.class);
     }
 
 }
