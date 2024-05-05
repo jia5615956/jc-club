@@ -2,13 +2,21 @@ package com.jia.auth.domain.service.impl;
 
 import com.jia.auth.common.enums.AuthUserStatusEnum;
 import com.jia.auth.common.enums.IsDeletedFlagEnum;
+import com.jia.auth.domain.constants.AuthConstant;
 import com.jia.auth.domain.convert.AuthUserBOConvert;
 import com.jia.auth.domain.entity.AuthUserBO;
 import com.jia.auth.domain.service.AuthUserDoaminService;
+import com.jia.auth.infra.basic.entity.AuthRole;
 import com.jia.auth.infra.basic.entity.AuthUser;
+import com.jia.auth.infra.basic.entity.AuthUserRole;
+import com.jia.auth.infra.basic.service.AuthRoleService;
+import com.jia.auth.infra.basic.service.AuthUserRoleService;
 import com.jia.auth.infra.basic.service.AuthUserService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 
 @Service
@@ -17,9 +25,15 @@ public class AuthUserDoaminServiceImpl implements AuthUserDoaminService {
 
     @Resource
     private AuthUserService authUserService;
+    @Resource
+    private AuthRoleService authRoleService;
+    @Resource
+    private AuthUserRoleService authUserRoleService;
 
     //注册
     @Override
+    @SneakyThrows
+    @Transactional(rollbackFor = Exception.class)
     public Boolean register(AuthUserBO authUserBO) {
         //转换
         AuthUser authUser = AuthUserBOConvert.INSTANCE.convertBOToEntity(authUserBO);
@@ -27,6 +41,20 @@ public class AuthUserDoaminServiceImpl implements AuthUserDoaminService {
         authUser.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
         authUser.setStatus(AuthUserStatusEnum.OPEN.getCode());
         Integer insertFlag = authUserService.insert(authUser);
+        //同时给客户角色,获取正常用户角色的id
+        AuthRole authRole = new AuthRole();
+        authRole.setRoleKey(AuthConstant.NORMAL_USER);
+        AuthRole roleResult = authRoleService.queryByCondition(authRole);
+        //获取角色id
+        Long roleId = roleResult.getId();
+        //获取新增用户id
+        Long userId = authUser.getId();
+        //将这两个id添加到表里
+        AuthUserRole authUserRole = new AuthUserRole();
+        authUserRole.setUserId(userId);
+        authUserRole.setRoleId(roleId);
+        authUserRole.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
+        authUserRoleService.insert(authUserRole);
         return insertFlag > 0;
     }
 

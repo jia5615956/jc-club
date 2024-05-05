@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 
 
 @RestController
-@RequestMapping("/user/")
+@RequestMapping("/user")
 @Slf4j
 public class UserController {
 
@@ -105,7 +105,7 @@ public class UserController {
     @RequestMapping("doLogin")
     public String doLogin(String username, String password) {
         // 此处仅作模拟示例，真实项目需要从数据库中查询数据进行比对
-        if("zhang".equals(username) && "123456".equals(password)) {
+        if("zhang".equals(username) && "123456".equals(password)) {         
             StpUtil.login(10001);
             return "登录成功";
         }
