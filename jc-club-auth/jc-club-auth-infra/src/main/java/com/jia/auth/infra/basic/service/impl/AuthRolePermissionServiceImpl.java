@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -70,5 +71,10 @@ public class AuthRolePermissionServiceImpl implements AuthRolePermissionService 
     @Override
     public int batchInsert(List<AuthRolePermission> rolePermissionList) {
         return authRolePermissionDao.insertBatch(rolePermissionList);
+    }
+
+    @Override
+    public List<AuthRolePermission> queryByCondition(AuthRolePermission authRolePermission) {
+        return authRolePermissionDao.queryAllByLimit(authRolePermission);
     }
 }

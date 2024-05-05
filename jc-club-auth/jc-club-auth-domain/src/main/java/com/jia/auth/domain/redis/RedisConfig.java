@@ -1,4 +1,5 @@
-package com.jia.gateway.redis;
+package com.jia.auth.domain.redis;
+
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

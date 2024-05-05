@@ -1,23 +1,25 @@
 package com.jia.auth.domain.service.impl;
 
+import com.google.gson.Gson;
 import com.jia.auth.common.enums.AuthUserStatusEnum;
 import com.jia.auth.common.enums.IsDeletedFlagEnum;
 import com.jia.auth.domain.constants.AuthConstant;
 import com.jia.auth.domain.convert.AuthUserBOConvert;
 import com.jia.auth.domain.entity.AuthUserBO;
+import com.jia.auth.domain.redis.RedisUtil;
 import com.jia.auth.domain.service.AuthUserDoaminService;
-import com.jia.auth.infra.basic.entity.AuthRole;
-import com.jia.auth.infra.basic.entity.AuthUser;
-import com.jia.auth.infra.basic.entity.AuthUserRole;
-import com.jia.auth.infra.basic.service.AuthRoleService;
-import com.jia.auth.infra.basic.service.AuthUserRoleService;
-import com.jia.auth.infra.basic.service.AuthUserService;
+import com.jia.auth.infra.basic.entity.*;
+import com.jia.auth.infra.basic.service.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -29,6 +31,17 @@ public class AuthUserDoaminServiceImpl implements AuthUserDoaminService {
     private AuthRoleService authRoleService;
     @Resource
     private AuthUserRoleService authUserRoleService;
+    @Resource
+    private RedisUtil redisUtil;
+
+    private String authPermissionPrefix = "auth.permission";
+
+    private String authRolePrefix = "auth.role";
+    @Autowired
+    private AuthRolePermissionService authRolePermissionService;
+    @Resource
+    private AuthPermissionService authPermissionService;
+
 
     //注册
     @Override
@@ -55,6 +68,21 @@ public class AuthUserDoaminServiceImpl implements AuthUserDoaminService {
         authUserRole.setRoleId(roleId);
         authUserRole.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
         authUserRoleService.insert(authUserRole);
+        //同时将角色信息放入缓存中,创建缓存key
+        String roleKey = redisUtil.buildKey(authRolePrefix, authUser.getUserName());
+        List<AuthRole> roleList = new LinkedList<>();
+        roleList.add(authRole);
+        redisUtil.set(roleKey,new Gson().toJson(roleList));
+        //将权限信息放入缓存中
+        AuthRolePermission authRolePermission = new AuthRolePermission();
+        authRolePermission.setRoleId(roleId);
+        //在角色权限表中查角色对应的权限
+        List<AuthRolePermission> authRolePermissionList = authRolePermissionService.queryByCondition(authRolePermission);
+        //再根据权限id查询对应的权限信息
+        List<Long> permissionIdList = authRolePermissionList.stream().map(AuthRolePermission::getPermissionId).collect(Collectors.toList());
+        List<AuthPermission> permissionList = authPermissionService.queryByRoleList(permissionIdList);
+        String permissionKey = redisUtil.buildKey(authPermissionPrefix, authUser.getUserName());
+        redisUtil.set(permissionKey,new Gson().toJson(permissionList));
         return insertFlag > 0;
     }
 

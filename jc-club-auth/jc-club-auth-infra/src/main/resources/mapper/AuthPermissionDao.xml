@@ -76,7 +76,6 @@ id,name,parent_id,type,menu_url,status,`show`,icon,permission_key,created_by,cre
                 and is_deleted = #{isDeleted}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->
@@ -127,6 +126,13 @@ id,name,parent_id,type,menu_url,status,`show`,icon,permission_key,created_by,cre
                 and is_deleted = #{isDeleted}
             </if>
         </where>
+    </select>
+    <select id="queryByRoleList" resultType="com.jia.auth.infra.basic.entity.AuthPermission">
+        select * from auth_permission
+        where id in
+        <foreach open="(" close=")" separator="," collection="list" item="id">
+            #{id}
+        </foreach>
     </select>
 
     <!--新增所有列-->
