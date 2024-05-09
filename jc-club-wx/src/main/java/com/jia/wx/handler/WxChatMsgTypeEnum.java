@@ -16,7 +16,7 @@ public enum WxChatMsgTypeEnum {
     //静态方法循环获取枚举的value
     public static WxChatMsgTypeEnum getByMsgType(String msgType) {
         for(WxChatMsgTypeEnum wxChatMsgTypeEnum : WxChatMsgTypeEnum.values()) {
-            if(msgType.equals(wxChatMsgTypeEnum)){
+            if(wxChatMsgTypeEnum.msgType.equals(msgType)){
                 return wxChatMsgTypeEnum;
             }
         }

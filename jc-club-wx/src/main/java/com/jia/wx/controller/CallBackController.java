@@ -6,10 +6,12 @@ import com.jia.wx.handler.WxChatMsgHandler;
 import com.jia.wx.utils.MessageUtil;
 import com.jia.wx.utils.SHA1;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Map;
+import java.util.Objects;
 
 
 @RestController
@@ -55,24 +57,24 @@ public class CallBackController {
         //将用户登录的信息通过map获取
         Map<String, String> msgMap = MessageUtil.parseXml(requestBody);
         //获取给谁发送消息和发送给谁
-        String toUserName = msgMap.get("ToUserName");
-        String fromUserName = msgMap.get("FromUserName");
         String msgType = msgMap.get("MsgType");
         String event = msgMap.get("Event") == null ? "" : msgMap.get("Event");
         //拼接枚举类型
-        String msgTypeKey = event+"."+msgType;
+        StringBuilder sb = new StringBuilder();
+        sb.append(msgType);
+        if (!StringUtils.isEmpty(event)) {
+            sb.append(".");
+            sb.append(event);
+        }
+        String msgTypeKey = sb.toString();
         //调用工厂
-        WxChatMsgHandler handlerByMsgType = wxChatMsgFactory.getHandlerByMsgType(msgTypeKey);
+        WxChatMsgHandler wxChatMsgHandler = wxChatMsgFactory.getHandlerByMsgType(msgTypeKey);
+        if (Objects.isNull(wxChatMsgHandler)) {
+            return "unknown";
+        }
 
+        String dealMsg = wxChatMsgHandler.dealMsg(msgMap);
 
-        String msg ="<xml>\n" +
-                "  <ToUserName><![CDATA["+fromUserName+"]]></ToUserName>\n" +
-                "  <FromUserName><![CDATA["+toUserName+"]]></FromUserName>\n" +
-                "  <CreateTime>1348831860</CreateTime>\n" +
-                "  <MsgType><![CDATA[text]]></MsgType>\n" +
-                "  <Content><![CDATA[很烦。]]></Content>\n" +
-                "</xml>";
-
-        return msg;
+        return dealMsg;
     }
 }
