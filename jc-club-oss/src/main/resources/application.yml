@@ -1,7 +1,7 @@
 server:
   port: 4000
 minio:
-  url: http://111.229.107.98:9000
+  url: http://jiadw.91y.xyz:9000
   accessKey: minioadmin
   secretKey: minioadmin
 

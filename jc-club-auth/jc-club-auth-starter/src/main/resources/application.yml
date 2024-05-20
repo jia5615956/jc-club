@@ -3,14 +3,13 @@ server:
 spring:
   datasource:
     username: root
-    password: ACC2cGBL2cGh5ZF7a9Qj5yZa2Ee7P8sktLgDXj6AkCDVydYWZIIlITgT1xDz2H9lH0NPZOMqieyWJ1W/JtTJASz4
+    password: a5615956
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://111.229.107.98:3306/jc-club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
+    url: jdbc:mysql://jiadw.91y.xyz:3306/jc-club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       initial-size: 20
       min-idle: 20
-      connectionProperties: config.decrypt=true;config.decrypt.key=${publicKey}
       max-active: 100
       max-wait: 6000
       stat-view-servlet:
@@ -31,11 +30,11 @@ spring:
     # Redis数据库索引（默认为0）
     database: 1
     # Redis服务器地址
-    host: 111.229.107.98
+    host: jiadw.91y.xyz
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空）
-    password: Aa5615956.
+    password: a5615956
     # 连接超时时间
     timeout: 2s
     lettuce:
@@ -48,7 +47,6 @@ spring:
         max-idle: 10
         # 连接池中的最小空闲连接
         min-idle: 0
-publicKey: MF0wDQYJKoZIhvcNAQEBBQADTAAwSQJCAQb0ma1w5HX6dFDR500vO5QIF9OudgW1viqphkR8ESHJB9NUwR2uDPSdlRXsxpFSMqxfSbXsWHNxa8D/J3GkHG7ZAgMBAAE=
 logging:
   config:
     classpath: log4j2-spring.xml
@@ -64,6 +62,7 @@ sa-token:
   # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
   is-share: true
   # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
-  token-style: uuid
+  token-style: random-32
   # 是否输出操作日志
   is-log: true
+  token-prefix: jiadongwei

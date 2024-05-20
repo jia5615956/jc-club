@@ -1,5 +1,6 @@
 package com.jia.auth.domain.service;
 
+import cn.dev33.satoken.stp.SaTokenInfo;
 import com.jia.auth.domain.entity.AuthUserBO;
 
 public interface AuthUserDoaminService {
@@ -10,4 +11,5 @@ public interface AuthUserDoaminService {
 
     Boolean delete(AuthUserBO authUserBO);
 
+    SaTokenInfo doLogin(String validCode);
 }

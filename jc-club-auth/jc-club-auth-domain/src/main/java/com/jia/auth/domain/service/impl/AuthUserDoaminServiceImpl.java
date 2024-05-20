@@ -1,5 +1,9 @@
 package com.jia.auth.domain.service.impl;
 
+import cn.dev33.satoken.secure.SaSecureUtil;
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.google.gson.Gson;
 import com.jia.auth.common.enums.AuthUserStatusEnum;
 import com.jia.auth.common.enums.IsDeletedFlagEnum;
@@ -34,6 +38,11 @@ public class AuthUserDoaminServiceImpl implements AuthUserDoaminService {
     @Resource
     private RedisUtil redisUtil;
 
+    private static final String LOGIN_PREFIX = "logincode";
+
+    private String salt = "jiadongwei";
+
+
     private String authPermissionPrefix = "auth.permission";
 
     private String authRolePrefix = "auth.role";
@@ -50,6 +59,10 @@ public class AuthUserDoaminServiceImpl implements AuthUserDoaminService {
     public Boolean register(AuthUserBO authUserBO) {
         //转换
         AuthUser authUser = AuthUserBOConvert.INSTANCE.convertBOToEntity(authUserBO);
+        //如果密码不为空调用加盐
+        if(!StringUtils.isBlank(authUser.getPassword())){
+            authUser.setPassword(SaSecureUtil.md5BySalt(authUser.getPassword(),salt));
+        }
         //新增时，默认是状态是启用和未删除
         authUser.setIsDeleted(IsDeletedFlagEnum.UN_DELETED.getCode());
         authUser.setStatus(AuthUserStatusEnum.OPEN.getCode());
@@ -103,6 +116,26 @@ public class AuthUserDoaminServiceImpl implements AuthUserDoaminService {
         authUser.setIsDeleted(IsDeletedFlagEnum.DELETED.getCode());
         Integer update = authUserService.update(authUser);
         return update > 0;
+    }
+
+    //登录逻辑
+    @Override
+    public SaTokenInfo doLogin(String validCode) {
+        //构建rediskey
+        String buildKey = redisUtil.buildKey(LOGIN_PREFIX, validCode);
+        //redis查询
+        String openId = redisUtil.get(buildKey);
+        //判断
+        if(StringUtils.isBlank(openId)){
+            return null;
+        }
+        AuthUserBO authUserBO = new AuthUserBO();
+        authUserBO.setUserName(openId);
+        //调用注册接口
+        this.register(authUserBO);
+        StpUtil.login(openId);
+        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+        return tokenInfo;
     }
 
 }

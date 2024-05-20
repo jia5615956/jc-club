@@ -16,6 +16,8 @@ public class ReceiveTextMsgHandler implements WxChatMsgHandler{
 
     private static final String KEY_WORD = "验证码";
 
+    private static final String LOGIN_PREFIX = "logincode";
+
     @Resource
     private RedisUtil redisUtil;
 
@@ -37,8 +39,8 @@ public class ReceiveTextMsgHandler implements WxChatMsgHandler{
         int num = random.nextInt(1000);
         String numContent = "您当前的验证码是：" + num + "！ 5分钟内有效";
         //将验证码放到redis,用发来信息的用户
-        String buildKey = redisUtil.buildKey(fromUserName, String.valueOf(num));
-        redisUtil.setNx(buildKey,"1",5L, TimeUnit.MINUTES);
+        String numKey = redisUtil.buildKey(LOGIN_PREFIX,String.valueOf(num));
+        redisUtil.setNx(numKey,fromUserName,5L, TimeUnit.MINUTES);
         String msg ="<xml>\n" +
                 "  <ToUserName><![CDATA["+fromUserName+"]]></ToUserName>\n" +
                 "  <FromUserName><![CDATA["+toUserName+"]]></FromUserName>\n" +
