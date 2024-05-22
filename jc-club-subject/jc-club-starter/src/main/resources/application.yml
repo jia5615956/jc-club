@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     username: root
-    password: a5615956
+    password: 5615956
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://jiadw.91y.xyz:3306/jc-club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
+    url: jdbc:mysql://111.229.107.98:3306/jc-club?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       initial-size: 20
