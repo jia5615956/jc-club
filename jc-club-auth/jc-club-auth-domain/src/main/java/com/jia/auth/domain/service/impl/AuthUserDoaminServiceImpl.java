@@ -58,6 +58,13 @@ public class AuthUserDoaminServiceImpl implements AuthUserDoaminService {
     @SneakyThrows
     @Transactional(rollbackFor = Exception.class)
     public Boolean register(AuthUserBO authUserBO) {
+        //判断用户是否存在
+        AuthUser exitUser = new AuthUser();
+        exitUser.setUserName(authUserBO.getUserName());
+        List<AuthUser> authUsers = authUserService.queryByCondition(exitUser);
+        if(authUsers.size() > 0){
+            return true;
+        }
         //转换
         AuthUser authUser = AuthUserBOConvert.INSTANCE.convertBOToEntity(authUserBO);
         //如果密码不为空调用加盐

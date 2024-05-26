@@ -31,4 +31,6 @@ public interface StorageAdapter {
 
     //删除桶
     public void deleteBucket(String bucketName) ;
+
+    String getUrl(String bucket, String objectName);
 }

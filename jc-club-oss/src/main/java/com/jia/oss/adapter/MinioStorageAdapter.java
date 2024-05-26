@@ -3,6 +3,7 @@ package com.jia.oss.adapter;
 import com.jia.oss.entity.FileInfo;
 import com.jia.oss.util.MinioUtil;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,13 @@ public class MinioStorageAdapter implements StorageAdapter {
 
     @Resource
     private MinioUtil minioUtil;
+
+    /**
+     * minioUrl
+     */
+    @Value("${minio.url}")
+    private String url;
+
 
     @Override
     @SneakyThrows
@@ -64,5 +72,11 @@ public class MinioStorageAdapter implements StorageAdapter {
     @SneakyThrows
     public void deleteBucket(String bucketName){
         minioUtil.deleteBucket(bucketName);
+    }
+
+    @Override
+    @SneakyThrows
+    public String getUrl(String bucket, String objectName) {
+        return url + "/" + bucket + "/" + objectName;
     }
 }

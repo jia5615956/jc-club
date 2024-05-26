@@ -1,7 +1,6 @@
 package com.jia.oss.adapter;
 
 import com.jia.oss.entity.FileInfo;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -46,5 +45,10 @@ public class AliStorageAdapter implements StorageAdapter {
     @Override
     public void deleteBucket(String bucketName) {
 
+    }
+
+    @Override
+    public String getUrl(String bucket, String objectName) {
+        return null;
     }
 }

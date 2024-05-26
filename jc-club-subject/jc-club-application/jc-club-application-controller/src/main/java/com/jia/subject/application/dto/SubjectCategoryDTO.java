@@ -24,4 +24,7 @@ public class SubjectCategoryDTO {
      * 父级id
      */
     private Long parentId;
+
+    //数量
+    private Integer count;
 }

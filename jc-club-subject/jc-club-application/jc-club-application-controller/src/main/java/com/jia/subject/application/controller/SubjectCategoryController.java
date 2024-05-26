@@ -46,7 +46,7 @@ public class SubjectCategoryController {
         }
     }
 
-    //查询分类
+    //查询岗位大类
     @PostMapping("/queryPrimaryCategory")
     public Result<List<SubjectCategoryDTO>> queryPrimaryCategory(){
         try{
