@@ -47,7 +47,7 @@ public class SubjectCategoryController {
     }
 
     //查询分类
-    @GetMapping("/queryPrimaryCategory")
+    @PostMapping("/queryPrimaryCategory")
     public Result<List<SubjectCategoryDTO>> queryPrimaryCategory(){
         try{
             //为了同一个服务调用

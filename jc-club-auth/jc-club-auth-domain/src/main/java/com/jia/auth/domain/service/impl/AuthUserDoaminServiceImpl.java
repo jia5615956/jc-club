@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.LinkedList;
@@ -137,5 +138,18 @@ public class AuthUserDoaminServiceImpl implements AuthUserDoaminService {
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         return tokenInfo;
     }
+
+    @Override
+    public AuthUserBO getUserInfo(AuthUserBO authUserBO) {
+        AuthUser authUser = new AuthUser();
+        authUser.setUserName(authUserBO.getUserName());
+        List<AuthUser> userList = authUserService.queryByCondition(authUser);
+        if (CollectionUtils.isEmpty(userList)) {
+            return new AuthUserBO();
+        }
+        AuthUser user = userList.get(0);
+        return AuthUserBOConvert.INSTANCE.convertEntityToBO(user);
+    }
+
 
 }

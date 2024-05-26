@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 用户信息表(AuthUser)表服务实现类
@@ -69,5 +71,10 @@ public class AuthUserServiceImpl implements AuthUserService {
     @Override
     public int updateByUserName(AuthUser authUser) {
         return authUserDao.updateByUserName(authUser);
+    }
+
+    @Override
+    public List<AuthUser> queryByCondition(AuthUser authUser) {
+        return this.authUserDao.queryAllByLimit(authUser);
     }
 }

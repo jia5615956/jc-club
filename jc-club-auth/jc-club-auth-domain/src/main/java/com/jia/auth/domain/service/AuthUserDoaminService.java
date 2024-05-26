@@ -12,4 +12,6 @@ public interface AuthUserDoaminService {
     Boolean delete(AuthUserBO authUserBO);
 
     SaTokenInfo doLogin(String validCode);
+
+    public AuthUserBO getUserInfo(AuthUserBO authUserBO);
 }

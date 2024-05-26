@@ -2,6 +2,8 @@ package com.jia.auth.infra.basic.service;
 
 import com.jia.auth.infra.basic.entity.AuthUser;
 
+import java.util.List;
+
 /**
  * 用户信息表(AuthUser)表服务接口
  *
@@ -44,4 +46,6 @@ public interface AuthUserService {
     boolean deleteById(Long id);
 
     int updateByUserName(AuthUser authUser);
+
+    List<AuthUser> queryByCondition(AuthUser authUser);
 }

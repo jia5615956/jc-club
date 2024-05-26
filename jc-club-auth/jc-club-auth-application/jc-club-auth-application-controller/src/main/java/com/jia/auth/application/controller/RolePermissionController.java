@@ -1,7 +1,6 @@
 package com.jia.auth.application.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.google.common.base.Preconditions;
 import com.jia.auth.application.convert.AuthRolePermissionDTOConverter;
 import com.jia.auth.application.dto.AuthRolePermissionDTO;
@@ -9,12 +8,19 @@ import com.jia.auth.common.entity.Result;
 import com.jia.auth.domain.entity.AuthRolePermissionBO;
 import com.jia.auth.domain.service.AuthRolePermissionDomainService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
+/**
+ * 角色权限controller
+ *
+ * @author: ChickenWing
+ * @date: 2023/11/2
+ */
 @RestController
 @RequestMapping("/rolePermission/")
 @Slf4j
