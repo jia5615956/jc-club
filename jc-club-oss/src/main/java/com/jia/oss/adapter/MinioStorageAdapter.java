@@ -33,15 +33,16 @@ public class MinioStorageAdapter implements StorageAdapter {
 
     @Override
     @SneakyThrows
-    public void uploadFile(String bucketName, String fileName, MultipartFile uploadFile){
+    public void uploadFile(MultipartFile uploadFile,String bucket,String objectName){
         //先创建bucket
-        minioUtil.createBucket(bucketName);
+        minioUtil.createBucket(bucket);
         //判断文件名字是否存在
-        if(fileName != null && !fileName.isEmpty()){
-            minioUtil.uploadFile(uploadFile.getInputStream(),bucketName,fileName+"/"+uploadFile.getName());
-        }else {
-            minioUtil.uploadFile(uploadFile.getInputStream(),bucketName,uploadFile.getName());
+        if (objectName != null) {
+            minioUtil.uploadFile(uploadFile.getInputStream(), bucket, objectName + "/" + uploadFile.getOriginalFilename());
+        } else {
+            minioUtil.uploadFile(uploadFile.getInputStream(), bucket, uploadFile.getOriginalFilename());
         }
+
     }
 
     @Override
@@ -77,6 +78,6 @@ public class MinioStorageAdapter implements StorageAdapter {
     @Override
     @SneakyThrows
     public String getUrl(String bucket, String objectName) {
-        return url + "/" + bucket + "/" + objectName;
+        return minioUtil.getPreviewFileUrl(bucket,objectName);
     }
 }

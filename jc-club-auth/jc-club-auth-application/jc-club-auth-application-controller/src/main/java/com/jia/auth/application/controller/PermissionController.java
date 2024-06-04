@@ -83,4 +83,20 @@ public class PermissionController {
             return Result.fail("删除权限信息失败");
         }
     }
+
+    //查询用户权限
+    @RequestMapping("/getPermission")
+    public Result<Boolean> getPermission(String username){
+        try {
+            if (log.isInfoEnabled()) {
+                log.info("PermissionController.getPermission.dto:{}", JSON.toJSONString(username));
+            }
+            //判断
+            Preconditions.checkNotNull(username, "用户名不能为空");
+            return Result.ok(authPermissionDomainService.getPermission(username));
+        }catch (Exception e) {
+            log.error("PermissionController.getPermission.error:{}", e.getMessage(), e);
+            return Result.fail("获取用户权限信息失败");
+        }
+    }
 }

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 //minio配置文件
 @Configuration
-public class MinioConfig {
+public class   MinioConfig {
 
     /**
      * minioUrl

@@ -14,7 +14,7 @@ public interface StorageAdapter {
     public void createBucket(String bucket);
 
     //上传文件
-    public void uploadFile(String bucketName, String fileName, MultipartFile inputStream);
+    public void uploadFile(MultipartFile uploadFile,String bucket,String objectName);
 
     //列出所有的桶
     public List<String> getAllBucket();

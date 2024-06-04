@@ -2,6 +2,7 @@ package com.jia.oss.util;
 
 import com.jia.oss.entity.FileInfo;
 import io.minio.*;
+import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
 import org.springframework.stereotype.Component;
@@ -28,11 +29,14 @@ public class MinioUtil {
 
 
 
-    //上传文件
+    /**
+     * 上传文件
+     */
     public void uploadFile(InputStream inputStream, String bucket, String objectName) throws Exception {
         minioClient.putObject(PutObjectArgs.builder().bucket(bucket).object(objectName)
                 .stream(inputStream, -1, 5242889L).build());
     }
+
 
 
     //列出所有的桶
@@ -74,5 +78,16 @@ public class MinioUtil {
     public void deleteBucket(String bucketName) throws Exception {
         minioClient.removeBucket(RemoveBucketArgs.builder().bucket(bucketName).build());
     }
+
+    /**
+     * 获取文件url
+     */
+    public String getPreviewFileUrl(String bucketName, String objectName) throws Exception{
+        GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder()
+                .method(Method.GET)
+                .bucket(bucketName).object(objectName).build();
+        return minioClient.getPresignedObjectUrl(args);
+    }
+
 
 }

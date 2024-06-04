@@ -33,7 +33,8 @@ public class FileController {
 
     //上传文件
     @RequestMapping("/upload")
-    public String upload(String bucketName, String fileName, MultipartFile inputStream)throws Exception{
-        return fileService.uploadFile(bucketName, fileName, inputStream);
+    public String upload(MultipartFile uploadFile,String bucket,String objectName)throws Exception{
+        objectName = objectName + "/" + uploadFile.getOriginalFilename();
+        return fileService.uploadFile(uploadFile, bucket, objectName);
     }
 }
