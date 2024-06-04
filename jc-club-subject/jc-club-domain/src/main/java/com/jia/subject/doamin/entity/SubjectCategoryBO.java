@@ -2,6 +2,8 @@ package com.jia.subject.doamin.entity;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class SubjectCategoryBO {
     /**
@@ -24,4 +26,7 @@ public class SubjectCategoryBO {
      * 父级id
      */
     private Long parentId;
+
+    //标签
+    private List<SubjectLabelBO> subjectLabelBOList;
 }

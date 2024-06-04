@@ -20,4 +20,6 @@ public interface SubjectCategoryDomainService {
     Boolean deleteCategoryByPrimary(SubjectCategoryBO subjectCategoryBO);
 
     Boolean updateCategory(SubjectCategoryBO subjectCategoryBO);
+
+    List<SubjectCategoryBO> queryCategoryAndLabel(SubjectCategoryBO subjectCategoryBO);
 }

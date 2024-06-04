@@ -1,6 +1,9 @@
 package com.jia.subject.application.dto;
 
+import com.jia.subject.doamin.entity.SubjectLabelBO;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class SubjectCategoryDTO {
@@ -27,4 +30,7 @@ public class SubjectCategoryDTO {
 
     //数量
     private Integer count;
+
+    //标签
+    private List<SubjectLabelDTO> subjectLabelDTOOList;
 }
